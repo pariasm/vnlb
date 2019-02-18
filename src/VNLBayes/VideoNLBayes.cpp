@@ -91,7 +91,7 @@ void defaultParameters(
 
 	// Maximum patch distance threshold for similar patches
 	if(s1) prms.tau = 0; // 0 means that the threshold is not used
-	else   prms.tau = 16.f * psz_x * psz_x * size.channels;
+	else   prms.tau = 400;
 
 	// Bayesian filtering parameters
 	prms.rank = 39;    // Maximum rank of covariance matrices
@@ -102,7 +102,7 @@ void defaultParameters(
 #ifdef FAT_ORIGINAL
 	prms.gamma = 1.05f; // Parameter used to determine if an area is flat
 #else
-	prms.gamma = 0.5f;  // Parameter used to determine if an area is flat
+	prms.gamma = 0.95f; // Parameter used to determine if an area is flat
 #endif
 
 	// Parameters for speed-up by skipping patches
