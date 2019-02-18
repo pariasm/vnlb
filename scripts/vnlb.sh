@@ -31,12 +31,12 @@ $DIR/tvl1flow-seq.sh $SEQ $FFR $LFR $OUT
 
 # run denoising {{{1
 echo "$DIR/vnlbayes \
--i $SEQ -f $FFR -l $LFR -sigma $SIG -has-noise \
+-i $SEQ -f $FFR -l $LFR -sigma $SIG \
 -fof $OUT/tvl1_%03d_f.flo -bof $OUT/tvl1_%03d_b.flo \
 -deno $OUT/deno_%03d.tif -bsic $OUT/bsic_%03d.tif $PRM"
 
 $DIR/vnlbayes \
- -i $SEQ -f $FFR -l $LFR -sigma $SIG -has-noise \
+ -i $SEQ -f $FFR -l $LFR -sigma $SIG \
  -fof $OUT/tvl1_%03d_f.flo -bof $OUT/tvl1_%03d_b.flo \
  -deno $OUT/deno_%03d.tif -bsic $OUT/bsic_%03d.tif $PRM
 
