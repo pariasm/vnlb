@@ -587,7 +587,7 @@ unsigned processNLBayes(
 			// computeFlatArea function.
 			if (flatPatch == false)
 #endif
-			computeBayesEstimate(groupNoisy, groupBasic, mat, params, nSimP, sz.channels);
+			computeBayesEstimate(groupNoisy, groupBasic, mat, params, nSimP, sz.channels, flatPatch);
 
 			// Aggregation
 			remaining_groups -=
