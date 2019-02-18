@@ -1,0 +1,32 @@
+CODE
+====
+
+Pablo Arias (Author)
+Marc Lebrun (Author of the original NLBayes for still image denoising)
+
+NOTE: The code is a largely modified version of the NLBayes image denoising
+algorithm available here:
+
+Marc Lebrun, Antoni Buades, and Jean-Michel Morel,
+Implementation of the "Non-Local Bayes" (NL-Bayes) Image Denoising Algorithm,
+Image Processing On Line, 3 (2013), pp. 1–42.
+https://doi.org/10.5201/ipol.2013.16
+
+
+ACKNOWLEDGEMENTS
+================
+
+Thibaud Ehret (bug reports)
+
+
+CODE INCLUDED FROM
+==================
+
+Daniel Atkinson (some linear algebra, ccmath)
+Makoto Matsumoto and Takuji Nishimura (MT19937AR random number generator)
+Enric Meinhardt-Llopis (image i/o)
+Javier Sánchez (TVL1 optical flow)
+David Tschumperlé (command line parsing)
+
+NOTE: If I have forgotten some names, this is an involuntary error.
+Please tell me as soon as possible and I will add the missing names. --pablo

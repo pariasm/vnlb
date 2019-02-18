@@ -1,0 +1,6 @@
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
+include_directories(${IIO_INCLUDE_DIR})
+add_library(vidutils SHARED LibVideoT.cpp mt19937ar.c)
+target_link_libraries(vidutils iio)
+set_target_properties(vidutils PROPERTIES SOVERSION ${PROJECT_VERSION})
+install(TARGETS vidutils LIBRARY DESTINATION lib COMPONENT libs)
