@@ -24,8 +24,10 @@
 #include <cstdlib>
 #include <cstdio>
 
+extern "C" {
 #include <cblas.h>
 #include <lapacke.h>
+}
 
 using namespace std;
 
