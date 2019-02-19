@@ -691,8 +691,8 @@ unsigned estimateSimilarPatches(
 			int ct0 = ct[dt - dir];
 			float cx_f = cx0 + (use_flow ? (dir > 0 ? fflow(cx0,cy0,ct0,0) : bflow(cx0,cy0,ct0,0)) : 0.f);
 			float cy_f = cy0 + (use_flow ? (dir > 0 ? fflow(cx0,cy0,ct0,1) : bflow(cx0,cy0,ct0,1)) : 0.f);
-			cx[dt] = std::max(0.f, std::min((float)sz.width  - 1, round(cx_f)));
-			cy[dt] = std::max(0.f, std::min((float)sz.height - 1, round(cy_f)));
+			cx[dt] = std::max(0.f, std::min((float)sz.width  - 1, roundf(cx_f)));
+			cy[dt] = std::max(0.f, std::min((float)sz.height - 1, roundf(cy_f)));
 			ct[dt] = qt;
 		}
 		else
@@ -828,9 +828,10 @@ int computeFlatArea(
 	const bool s1 = params.isFirstStep;
 	const unsigned sP = params.sizePatch * params.sizePatch * params.sizePatchTime;
 	const float threshold = params.sigma * params.sigma * params.gamma;
-
+	
 	// Compute the standard deviation of the set of patches
 	const float variance = computeVariance(groupNoisy, sP, nSimP, channels);
+
 
 	if (variance < threshold)
 	{
