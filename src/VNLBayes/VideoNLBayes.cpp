@@ -346,6 +346,7 @@ std::vector<float> runNLBayesThreads(
 	// RGB to YUV
 	VideoUtils::transformColorSpace(imNoisy, true);
 	VideoUtils::transformColorSpace(imClean, true);
+	if (steps == 2) VideoUtils::transformColorSpace(imBasic, true);
 
 	// Multithreading: split video in tiles
 	unsigned nThreads = 1;
