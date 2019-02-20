@@ -833,6 +833,7 @@ int computeFlatArea(
 	// Compute the standard deviation of the set of patches
 	const float variance = computeVariance(groupNoisy, sP, nSimP, channels);
 
+
 	if (variance < threshold)
 	{
 #ifdef FAT_ORIGINAL
