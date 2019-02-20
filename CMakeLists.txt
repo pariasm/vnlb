@@ -1,14 +1,7 @@
-
+cmake_minimum_required(VERSION 2.8)
+cmake_policy(SET CMP0048 NEW) # avoid annoing warnings
 project(VideoNLBayes C CXX Fortran)
-
 message(STATUS "Configuring main project: " ${CMAKE_PROJECT_NAME})
-
-set(PROJECT_VERSION_MAJOR  3)
-set(PROJECT_VERSION_MINOR  2)
-set(PROJECT_VERSION_PATCH  0)
-
-set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}"
-    CACHE INTERNAL "The project version.")
 
 ###############################################################################
 
@@ -20,7 +13,6 @@ set(CMAKE_BUILD_TYPE Release)
 
 ###############################################################################
 
-cmake_minimum_required(VERSION 2.8.2)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/modules/")
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 

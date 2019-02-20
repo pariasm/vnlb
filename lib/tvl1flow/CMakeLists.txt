@@ -6,13 +6,6 @@ message(STATUS "Configuring project: " ${PROJECT_NAME})
 
 ###############################################################################
 
-#set(PROJECT_VERSION_MAJOR  0)
-#set(PROJECT_VERSION_MINOR  1)
-#set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
-#    CACHE INTERNAL "The project version.")
-
-###############################################################################
-
 # NOTE: -fPIC is added so that the static library can be included into
 #       shared libraries.
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -w -fPIC -O3 ")
