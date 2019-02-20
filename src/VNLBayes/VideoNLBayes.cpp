@@ -1279,7 +1279,7 @@ void computeWeightedAggregation(
 	for (unsigned y = 0; y < im.sz.height  ; y++)
 	for (unsigned x = 0; x < im.sz.width   ; x++)
 		if (weight(x,y,f) > 0.f) outIm(x,y,f,c) /= weight(x,y,f);
-		else                     outIm(x,y,f,c) /= im(x,y,f,c);
+		else                     outIm(x,y,f,c)  = im(x,y,f,c);
 }
 
 }
