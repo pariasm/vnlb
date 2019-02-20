@@ -30,14 +30,27 @@ done
 $DIR/tvl1flow-seq.sh $SEQ $FFR $LFR $OUT
 
 # run denoising {{{1
+
+# run first step
 echo "$DIR/vnlbayes \
--i $SEQ -f $FFR -l $LFR -sigma $SIG \
--fof $OUT/tvl1_%03d_f.flo -bof $OUT/tvl1_%03d_b.flo \
--deno $OUT/deno_%03d.tif -bsic $OUT/bsic_%03d.tif $PRM"
+ -i $SEQ -f $FFR -l $LFR -sigma $SIG \
+ -fof $OUT/tvl1_%03d_f.flo -bof $OUT/tvl1_%03d_b.flo \
+ -bsic $OUT/bsic_%03d.tif -px2 0 $PRM"
 
 $DIR/vnlbayes \
  -i $SEQ -f $FFR -l $LFR -sigma $SIG \
  -fof $OUT/tvl1_%03d_f.flo -bof $OUT/tvl1_%03d_b.flo \
- -deno $OUT/deno_%03d.tif -bsic $OUT/bsic_%03d.tif $PRM
+ -bsic $OUT/bsic_%03d.tif -px2 0 $PRM
+
+# run second step
+echo "$DIR/vnlbayes \
+ -i $SEQ -f $FFR -l $LFR -sigma $SIG -b $OUT/bsic_%03d.tif \
+ -fof $OUT/tvl1_%03d_f.flo -bof $OUT/tvl1_%03d_b.flo \
+ -deno $OUT/deno_%03d.tif -px1 0 $PRM"
+
+$DIR/vnlbayes \
+ -i $SEQ -f $FFR -l $LFR -sigma $SIG -b $OUT/bsic_%03d.tif \
+ -fof $OUT/tvl1_%03d_f.flo -bof $OUT/tvl1_%03d_b.flo \
+ -deno $OUT/deno_%03d.tif -px1 0 $PRM
 
 # vim:set foldmethod=marker:
