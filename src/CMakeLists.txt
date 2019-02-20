@@ -4,7 +4,7 @@ add_executable(vnlbayes main_vnlb.cpp)
 add_executable(awgn awgn.cpp)
 add_executable(psnr psnr.cpp)
 
-target_link_libraries(vnlbayes vnlb ${LAPACK_LIBRARIES})
+target_link_libraries(vnlbayes vnlb ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
 target_link_libraries(awgn vidutils)
 target_link_libraries(psnr vidutils)
 
