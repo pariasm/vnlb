@@ -113,9 +113,15 @@ vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder ["vn
 ```
 
  `sigma` refers to the noise
-standard deviation. Outputs are going to be left in `out-folder/`. The `vnlb-params` is an 
-optional script to override any of the default parameters of the denoising. For a 
-list of all parameters run `vnlbayes --help`.
+standard deviation. Outputs are going to be left in `out-folder/`. The `"vnlb-params"` is an 
+optional string to override any of the default parameters of the denoising. Note that the
+parameters given in this string need to be between quotes. For example, to use `5x5x2` patches
+in the first step, run:
+```
+vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder "-px1 5 -pt1 2"
+```
+
+For a list of all parameters and options run `vnlbayes --help`.
 
 Outputs include:
 * `out-folder/%03d.tif`: frames with noise added (as tif floating point images)
