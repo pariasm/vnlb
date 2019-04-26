@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	const string  bflow_path = clo_option("-bof", "", "< input backward optical flow");
 
 	// General parameters
-	const float sigma  = clo_option("-sigma", 0.f, "< add noise of standard deviation sigma");
+	const float sigma  = clo_option("-sigma", 0.f, "< standard deviation of the noise");
 	const float sigmab = clo_option("-sigma_basic", 0.f, "< standard dev. of remanent noise in the basic estimate");
 	const bool verbose    = (bool) clo_option("-verbose"     , true , "< verbose output");
 	const unsigned print_prms = (unsigned) clo_option("-print-prms", 0, "< prints parameters for given channels");
