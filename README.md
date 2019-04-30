@@ -66,31 +66,40 @@ denoising and computes PSNR
 -----
 **Usage of `vnlbayes`**
 
-The simplest use is shown via the following example:
+This is the main program. The simplest use is shown via the following example:
 
 ```
 vnlbayes -i /my/video/frame-%03d.png -f 1 -l 10 -sigma 10
 ```
 
 The method reads the video as a sequence of images. The sequence of images is passed
-as a pattern in printf format, thus `frame-%03d.png` means that frames have the following 
+as a pattern in printf format, thus `frame-%03d.png` means that frames have the following
 filenames: `frame-001.png`, `frame-002.png`, etc. The first and last frame are
 given with '-f' and '-l' (1 and 10 in the example). The denoising method performs
 two steps or iterations. The outputs will be stored by default
-in the folder from where the program is invoked: 
+in the folder from where the program is invoked:
 * `bsic_%03d.png`: first iteration (or basic estimate)
 * `deno_%03d.png`: second (and final) iteration
 
-If an optical flow (forward and backward) has been computed, it can be given to the 
+If an optical flow (forward and backward) has been computed, it can be given to the
 method as
 ```
 vnlbayes -i /my/video/frame-%03d.png -f 1 -l 10 -sigma 10\
          -fof /fwd/flow/frame-%03d.flo \
-         -fof /bwd/flow/frame-%03d.flo
+         -bof /bwd/flow/frame-%03d.flo
 ```
 
-Several options can be given. For a list of all parameters run `vnlbayes
---help`.
+Several options can be given. For example, to use `5x5x2` patches
+in the first step, run:
+```
+vnlbayes -i /my/video/frame-%03d.png -f 1 -l 10 -sigma 10\
+         -fof /fwd/flow/frame-%03d.flo \
+         -bof /bwd/flow/frame-%03d.flo \
+         -px1 5 -pt1 2
+```
+For a list of all parameters run `vnlbayes --help`, and for more information about
+the default parameters, see [this section.](#default-parameters)
+
 
 *NOTE: The optical flow files given to the method should be numbered according to the
 following convention:*
@@ -106,16 +115,19 @@ of zeros, for example). The script `tvl1flow-seq.sh` computes the optical flows 
 a sequence following the naming convention used by VNLB.*
 
 -----
-**Usage of `vnlb-gt.sh`**
+**Usage of `vnlb.sh`**
+
+This is just a helper scripts that computes the optical flow and then runs the
+`vnlbayes` binary. Its usage is the following:
 
 ```
-vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder ["vnlb-params"]
+vnlb.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder ["vnlb-params"]
 ```
 
  `sigma` refers to the noise
 standard deviation. Outputs are going to be left in `out-folder/`. The `"vnlb-params"` is an 
 optional string to override any of the default parameters of the denoising. Note that the
-parameters given in this string need to be between quotes. For example, to use `5x5x2` patches
+parameters given in this string *need to be between quotes*. For example, to use `5x5x2` patches
 in the first step, run:
 ```
 vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder "-px1 5 -pt1 2"
@@ -124,19 +136,40 @@ vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder "-px
 For a list of all parameters and options run `vnlbayes --help`.
 
 Outputs include:
-* `out-folder/%03d.tif`: frames with noise added (as tif floating point images)
 * `out-folder/tvl1_%03d_f.flo` forward optical flows
 * `out-folder/tvl1_%03d_b.flo` backward optical flows
 * `out-folder/bsic_%03d.tif`: first iteration (or basic estimate)
 * `out-folder/deno_%03d.tif`: second (and final) iteration
-* `out-folder/measures-bsic`: global and per-frame RMSE/PSNR of first iteration
-* `out-folder/measures-deno`: same for final iteration
 
 -----
-**Usage of `vnlb.sh`**
+**Usage of `vnlb-gt.sh`**
 
-Same as `vnlb-gt.sh`. In this case the input video has noise. No noise is added
-and PSNR/RMSE measures will not be computed.
+This helper script is useful for evaluating the performance of the denoising method by
+comparing its output to the ground truth clean video. It assumes that the input sequence
+has no noise, then adds noise of the given sigma, denoises it by calling the `vnlb.sh` script,
+and then computes the RMSR/PSNR with respect to the clean video. Its usage is exactly the
+same as `vnlb.sh`:
+
+```
+vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder ["vnlb-params"]
+```
+
+`sigma` is the standard deviation of the noise that *will be added to the
+sequence*. Outputs are going to be left in `out-folder/`. The `"vnlb-params"`
+is an optional string to override any of the default parameters of the
+denoising. Note that the parameters given in this string need to be between
+quotes. For example, to use `5x5x2` patches in the first step, run:
+```
+vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder "-px1 5 -pt1 2"
+```
+
+For a list of all parameters and options run `vnlbayes --help`.
+
+The outputs are those of the `vnlb.sh` script (optical flows, denoised videos),
+plus the following ones:
+* `out-folder/%03d.tif`: frames with noise added (as tif floating point images)
+* `out-folder/measures-bsic`: global and per-frame RMSE/PSNR of first iteration
+* `out-folder/measures-deno`: same for final iteration
 
 -----
 **Usage of `awgn`**
@@ -177,6 +210,35 @@ Computes the optical flow in direction `dir` (either `fwd`, `bwd` or `both`),
 and stores the output files in `out-folder/tvl1_%03d_f.flo` and
 `out-folder/tvl1_%03d_b.flo` (forward and backward flows respectively).
 
+
+DEFAULT PARAMETERS
+------------------
+
+The method has several paramaters (patch size, search window size, number of
+similar patches, variance threshold, etc.).
+The default parameters are set as a function of the patch size and the noise level sigma.
+If no patch size is given, one is assigned by default (see below). This is
+the one that maximized the PSNR on a small training set. Note that larger patches
+take longer to run.
+
+We have tuned the parameters for the following patch sizes:
+* Grayscale:
+     - 7x7x4
+     - 8x8x3
+     - **10x10x2** (default)
+     - 14x14x1
+     - 8x8x2
+     - 5x5x4
+     - 6x6x3
+     - 7x7x2
+     - 10x10x1
+* RGB:
+     - 5x5x4
+     - **7x7x2** (default)
+     - 10x10x1
+
+If the patch size given by the user is not one of these, the program will choose
+the default parameters from another patch size and a warning message will be printed.
 
 
 FILES

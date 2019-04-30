@@ -72,8 +72,8 @@ void defaultParameters(
 	// Default patch size
 	if (psz_x == -1 || psz_t == -1)
 	{
-		psz_x = (size.frames > 1) ? 7 : 10;
-		psz_t = (size.frames > 1) ? 2 : 1 ;
+		psz_x = (channels   == 1) ? 10 : 7 ;
+		psz_t = (size.frames > 1) ? 2  : 1 ;
 	}
 
 	// Store noise level in parameter struct
@@ -183,7 +183,7 @@ void defaultParameters(
 			prms.nSimilarPatches = s1 ? 100 : round( 40. + (s - 6.)*(60. - 40.)/(48. - 6.) );
 			prms.variThres = s1 ? 1.9 : max(0.7, 2.2 + (s - 6.)*(1.2 - 2.2)/(24. - 6.));
 
-			if (prms.verbose && psz_x != 10)
+			if (prms.verbose && psz_x && psz_x != 10)
 				fprintf(stderr, "Warning: No default params for given patch size. Keeping given\n"
 				                "         patch size, but using rest of parameters for 10x10x1.\n");
 		}
