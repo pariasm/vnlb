@@ -130,7 +130,7 @@ optional string to override any of the default parameters of the denoising. Note
 parameters given in this string *need to be between quotes*. For example, to use `5x5x2` patches
 in the first step, run:
 ```
-vnlb-gt.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder "-px1 5 -pt1 2"
+vnlb.sh /my/video/frame-%03d.png first-frame last-frame sigma out-folder "-px1 5 -pt1 2"
 ```
 
 For a list of all parameters and options run `vnlbayes --help`.

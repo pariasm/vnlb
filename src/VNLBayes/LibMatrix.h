@@ -67,20 +67,20 @@ void productMatrix(
 /* Matrix multiplication using BLAS SGEMM.
  *
  * AB: n x l product matrix (output)
- * A : n x m matrix
- * B : m x l matrix
+ * A : n x m matrix (or if transA = true, then A has to be m x n)
+ * B : m x l matrix (or if transB = true, then B has to be l x m)
  * n, m, l: size of matrices
  * transA: true for transposing A
  * transA: true for transposing B
- * colMajor: true if matrices are stored in row-major layout
+ * colMajor: true if matrices are stored in col-major layout (default = true)
  */
 void productMatrix(
 	std::vector<float> &AB,
 	std::vector<float> const& A,
 	std::vector<float> const& B,
 	const unsigned n,
-	const unsigned m,
 	const unsigned l,
+	const unsigned m,
 	const bool transA,
 	const bool transB,
 	const bool colMajor = true,
