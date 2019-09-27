@@ -288,7 +288,7 @@ original sources. They are included for convenience and they are not essential
 for VNLB. They are distributed under their own licences specified inside each file.
 
 ```
-lib/iio/*                : written by Enric Meinhard-Llopis
+lib/iio/*                : written by Enric Meinhardt-Llopis
 lib/tvl1flow/*           : written by Javier Sánchez
 src/cmd_option.h         : written by David Tshumperlé
 src/VidUtils/mt19937ar.* : written by Makoto Matsumoto and Takuji Nishimura
