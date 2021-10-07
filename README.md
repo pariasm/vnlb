@@ -276,6 +276,12 @@ root/
         └── VideoNLBayes.h/cpp  VNLB code
 ```
 
+KNOWN ISSUES
+------------
+
+The current code does not compile on Arch Linux distributions. A fixed for this was 
+proposed by [Jérémy Anger](https://github.com/kidanger/). More details can be found on [this thread](https://github.com/pariasm/vnlb/issues/7).
+
 
 LICENSE
 -------
