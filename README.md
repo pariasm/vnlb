@@ -4,10 +4,11 @@ VNLB | Non-local Bayesian Video Denoising
 * Author    : Pablo Arias <pariasm@gmail.com>, see `AUTHORS`
 * Copyright : (C) 2019, Pablo Arias <pariasm@gmail.com>
 
+
 OVERVIEW
 --------
 
-This code provides an implementation of the video denoising method VNLB-H
+This code provides a C/C++ implementation of the video denoising method VNLB-H
 described in:
 
 [P. Arias, J.-M. Morel. "Video denoising via empirical Bayesian estimation of
@@ -17,7 +18,21 @@ January 2018.](https://link.springer.com/article/10.1007%2Fs10851-017-0742-4)
 Please cite the publication if you use results obtained with this code in your
 research.
 
-The following libraries are also included as part of the code:
+
+PYTHON WRAPPER AND FULL PYTHON VERSION
+--------------------------------------
+
+The code in this repository is mostly in C/C++. If you prefer programming in Python, you might want to check these repositories:
+* [**Python wrapper** using SWIG to interface the C++ code with Python](https://github.com/gauenk/svnlb/)
+* [**Python version**: complete re-implementation in Python!!](https://github.com/gauenk/vnlb)
+
+Huge thanks to [Kent Gauent](https://github.com/gauenk) for both.
+
+
+COMPILATION AND DEPENDENCIES
+----------------------------
+
+The following 3rd party libraries are also included as part of the code:
 * For computing the optical flow, it includes [the IPOL
 implementation](http://www.ipol.im/pub/art/2013/26/) of
 the [TV-L1 optical flow method of Zack and Pock and
@@ -47,6 +62,7 @@ NOTE: By default, the code is compiled with OpenMP multithreaded
 parallelization enabled (if your system supports it). Use the
 `OMP_NUM_THREADS` enviroment variable to control the number of threads
 used.
+
 
 USAGE
 -----
